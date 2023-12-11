@@ -12,12 +12,18 @@ app.use(cors());
 const gameState = new GameState();
 let rig: undefined | Image = undefined;
 
-app.get("/spin", (req, res) => {
+app.post("/spin", (req, res) => {
+    if (gameState.flow === "baseGame") {
+        gameState.betPerLine = req.body.betPerLine;
+        gameState.lines = req.body.lines;
+    }
+
     if (gameState.flow === "baseGame" && gameState.balance - gameState.totalBet < 0) {
         res.status(402).send().end();
     }
-    gameState.balance -= gameState.totalBet;
-    gameState.flow = gameState.nextFlow;
+
+    if (gameState.flow === "baseGame") {
+    }
     res.status(200).send(makeSpinOutcome(rig, gameState)).end();
     rig = undefined;
 });
@@ -27,7 +33,7 @@ app.get("/init", (req, res) => {
 });
 
 app.post("/rig", (req, res) => {
-    rig = req.body.rigData as Image;
+    rig = req.body as Image;
     res.status(202).send().end();
 });
 

@@ -28,9 +28,12 @@ export class GameState {
     betPerLine: number = 1;
     maxBetPerLine: number = 10;
     lines: number = WIN_LINES_DATA.length;
-    totalBet: number = this.betPerLine * this.lines;
     fsWon: number = 0;
     fsLeft: number = 0;
+
+    get totalBet () {
+        return this.betPerLine * this.lines;
+    }
 }
 
 export type SpinOutcome = {
@@ -195,6 +198,6 @@ export const PAYTABLE: PaytableItem[] = [
     },
     {
         symbol: "reward1000",
-        payoutPerMatch: [0, 1, 3, 10, 100, 1000]
+        payoutPerMatch: [0, 0, 0, 1, 3, 10, 50, 100, 1000]
     }
 ]

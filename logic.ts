@@ -14,22 +14,39 @@ export function makeSpinOutcome(rig: undefined | Image, gameState: GameState): S
 }
 
 function updateGameState(gameState: GameState, winLines: WinLine[]) {
-    let totalWin = 0;
+    gameState.flow = gameState.nextFlow;
+
+    let totalPay = 0;
     winLines.forEach((winLine) => {
-        totalWin += winLine.payout;
+        totalPay += winLine.payout;
     });
-    gameState.balance += totalWin;
 
     if (gameState.flow === "freeSpins") {
         gameState.fsLeft--;
-        if (gameState.fsLeft === 0) gameState.nextFlow = "baseGame";
+        gameState.win += totalPay;
+        if (gameState.fsLeft === 0) {
+            gameState.nextFlow = "baseGame";
+            gameState.balance += gameState.win;
+            gameState.fsWon = 0;
+        }
         return;
     }
 
-    const sherifWin = winLines.find((winLine) => winLine.winSymbol === "sherif");
-    if (sherifWin === undefined) return;
-    gameState.fsWon = sherifWin.winCells.length * 2;
+    gameState.balance -= gameState.totalBet;
+    gameState.balance += totalPay;
+    gameState.win = totalPay;
+
+    const sherifWins = winLines.filter((winLine) => winLine.winSymbol === "sherif");
+    if (sherifWins.length === 0) return;
+
+    let maxFs = 0;
+    sherifWins.forEach((sherifWin) => {
+        const potentialFs = sherifWin.winCells.length * 2;
+        if (potentialFs > maxFs) maxFs = potentialFs;
+    });
+    gameState.fsWon = maxFs;
     gameState.fsLeft = gameState.fsWon;
+    gameState.nextFlow = "freeSpins";
 }
 
 function calculateWin(reelImage: Image, gameState: GameState) {
@@ -37,7 +54,7 @@ function calculateWin(reelImage: Image, gameState: GameState) {
     const scatterWin = getScatterWinLine(reelImage, gameState);
     if (scatterWin !== undefined) winLines.push(scatterWin);
     calculatePayouts(winLines, gameState);
-    return winLines;
+    return winLines.filter((winLine) => winLine.payout > 0);
 }
 
 function getStadardWinLines(reelImage: Image, gameState: GameState): WinLine[] {
@@ -67,14 +84,18 @@ function getStadardWinLines(reelImage: Image, gameState: GameState): WinLine[] {
 
             winLine.winCells.push(cell);
         }
+        winLines.push(winLine);
     }
 
     return winLines;
 }
 
 function isMatching(winLine: WinLine, symbol: Symbol): boolean {
+    //reward1000 is scatter
     if (winLine.winSymbol === "reward1000" || symbol === "reward1000") return false;
     if (winLine.winSymbol === symbol) return true;
+    //wild can't be substitute for sherif
+    if (winLine.winSymbol === "sherif" || symbol === "sherif") return false;
     if (winLine.winSymbol === "wild" || symbol === "wild") return true;
     return false;
 }
