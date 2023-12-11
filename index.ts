@@ -20,12 +20,10 @@ app.post("/spin", (req, res) => {
 
     if (gameState.flow === "baseGame" && gameState.balance - gameState.totalBet < 0) {
         res.status(402).send().end();
+    } else {
+        res.status(200).send(makeSpinOutcome(rig, gameState)).end();
+        rig = undefined;
     }
-
-    if (gameState.flow === "baseGame") {
-    }
-    res.status(200).send(makeSpinOutcome(rig, gameState)).end();
-    rig = undefined;
 });
 
 app.get("/init", (req, res) => {
