@@ -140,7 +140,8 @@ export function makeInitOutcome(gameState: GameState): Init {
     return {
         image: makeReelImage(),
         gameState,
-        lines: WIN_LINES_DATA
+        lines: WIN_LINES_DATA,
+        paytable: PAYTABLE
     }
 }
 

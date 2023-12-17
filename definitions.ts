@@ -46,6 +46,7 @@ export type Init = {
     image: Image,
     gameState: GameState,
     lines: Line[],
+    paytable: PaytableItem[]
 }
 
 export const NUM_REELS = 5;
