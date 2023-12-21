@@ -25,7 +25,7 @@ let rig: undefined | Image = undefined;
 app.post("/spin", (req, res) => {
     if (gameState.flow === "baseGame") {
         gameState.betPerLine = req.body.betPerLine;
-        gameState.lines = req.body;
+        gameState.lines = req.body.lines;
     }
 
     if (gameState.flow === "baseGame" && gameState.balance - (gameState.betPerLine * gameState.lines) < 0) {
