@@ -11,7 +11,7 @@ app.use(cors());
 
 const gameState: GameState = {
     balance: 1000,
-    betPerLine: 1,
+    betPerLine: 5,
     flow: "baseGame",
     fsLeft: 0,
     fsWon: 0,
@@ -25,7 +25,7 @@ let rig: undefined | Image = undefined;
 app.post("/spin", (req, res) => {
     if (gameState.flow === "baseGame") {
         gameState.betPerLine = req.body.betPerLine;
-        gameState.lines = req.body.lines;
+        gameState.lines = req.body;
     }
 
     if (gameState.flow === "baseGame" && gameState.balance - (gameState.betPerLine * gameState.lines) < 0) {
