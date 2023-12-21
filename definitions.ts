@@ -21,15 +21,15 @@ export type Image = Cell[][];
 export type Flow = "baseGame" | "freeSpins";
 
 export class GameState {
-    balance: number = 1000;
-    win: number = 0;
-    flow: Flow = "baseGame";
-    nextFlow: Flow = "baseGame";
-    betPerLine: number = 1;
-    maxBetPerLine: number = 10;
-    lines: number = WIN_LINES_DATA.length;
-    fsWon: number = 0;
-    fsLeft: number = 0;
+    public balance: number = 1000;
+    public win: number = 0;
+    public flow: Flow = "baseGame";
+    public nextFlow: Flow = "baseGame";
+    public betPerLine: number = 1;
+    public maxBetPerLine: number = 10;
+    public lines: number = WIN_LINES_DATA.length;
+    public fsWon: number = 0;
+    public fsLeft: number = 0;
 
     get totalBet () {
         return this.betPerLine * this.lines;
