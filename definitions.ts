@@ -20,20 +20,16 @@ export type Image = Cell[][];
 
 export type Flow = "baseGame" | "freeSpins";
 
-export class GameState {
-    public balance: number = 1000;
-    public win: number = 0;
-    public flow: Flow = "baseGame";
-    public nextFlow: Flow = "baseGame";
-    public betPerLine: number = 1;
-    public maxBetPerLine: number = 10;
-    public lines: number = WIN_LINES_DATA.length;
-    public fsWon: number = 0;
-    public fsLeft: number = 0;
-
-    get totalBet () {
-        return this.betPerLine * this.lines;
-    }
+export type GameState = {
+    balance: number;
+    win: number;
+    flow: Flow;
+    nextFlow: Flow;
+    betPerLine: number;
+    maxBetPerLine: number;
+    lines: number;
+    fsWon: number;
+    fsLeft: number;
 }
 
 export type SpinOutcome = {

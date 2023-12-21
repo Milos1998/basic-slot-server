@@ -32,7 +32,7 @@ function updateGameState(gameState: GameState, winLines: WinLine[]) {
         return;
     }
 
-    gameState.balance -= gameState.totalBet;
+    gameState.balance -= gameState.betPerLine * gameState.lines;
     gameState.balance += totalPay;
     gameState.win = totalPay;
 
@@ -118,7 +118,7 @@ function getScatterWinLine(reelImage: Image, gameState: GameState) {
     if (winLine.winCells.length >= payInfo.payoutPerMatch.length)
         multiplier = payInfo.payoutPerMatch[payInfo.payoutPerMatch.length - 1];
     else multiplier = payInfo.payoutPerMatch[winLine.winCells.length];
-    winLine.payout = multiplier * gameState.totalBet;
+    winLine.payout = multiplier * gameState.betPerLine * gameState.lines;
 
     if (winLine.winCells.length > 0) return winLine
     return undefined;
