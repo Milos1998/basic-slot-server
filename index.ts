@@ -15,7 +15,8 @@ const gameState: GameState = {
     flow: "baseGame",
     fsLeft: 0,
     fsWon: 0,
-    lines: WIN_LINES_DATA.length,
+    maxLines: WIN_LINES_DATA.length,
+    selectedLines: Math.floor(WIN_LINES_DATA.length / 2),
     maxBetPerLine: 10,
     nextFlow: "baseGame",
     win: 0,
@@ -25,10 +26,10 @@ let rig: undefined | Image = undefined;
 app.post("/spin", (req, res) => {
     if (gameState.flow === "baseGame") {
         gameState.betPerLine = req.body.betPerLine;
-        gameState.lines = req.body.lines;
+        gameState.selectedLines = req.body.selectedLines;
     }
 
-    if (gameState.flow === "baseGame" && gameState.balance - (gameState.betPerLine * gameState.lines) < 0) {
+    if (gameState.flow === "baseGame" && gameState.balance - (gameState.betPerLine * gameState.selectedLines) < 0) {
         res.status(402).send().end();
     } else {
         res.status(200).send(makeSpinOutcome(rig, gameState)).end();

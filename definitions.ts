@@ -27,7 +27,8 @@ export type GameState = {
     nextFlow: Flow;
     betPerLine: number;
     maxBetPerLine: number;
-    lines: number;
+    maxLines: number;
+    selectedLines: number;
     fsWon: number;
     fsLeft: number;
 }
