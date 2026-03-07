@@ -1,6 +1,6 @@
-export type Symbol = "wild" | "sherif" | "reward1000" | "diamonds" | "hearts" | "spades" | "clubs" | "A" | "K" | "Q" | "J" | "10" | "9";
+export type Symbol = "wild" | "sherif" | "wanted" | "longhorn" | "money-bag" | "hat" | "pistols" | "A" | "K" | "Q" | "J" | "10" | "9";
 
-export const allSymbols = ["wild", "sherif", "reward1000", "diamonds", "hearts", "spades", "clubs", "A", "K", "Q", "J", "10", "9"] as const;
+export const allSymbols = ["wild", "sherif", "wanted", "longhorn", "money-bag", "hat", "pistols", "A", "K", "Q", "J", "10", "9"] as const;
 
 export type Cell = {
     position: {
@@ -155,19 +155,19 @@ export const PAYTABLE: PaytableItem[] = [
         payoutPerMatch: [0, 0, 2, 30, 75, 500]
     },
     {
-        symbol: "diamonds",
+        symbol: "longhorn",
         payoutPerMatch: [0, 0, 2, 30, 75, 500]
     },
     {
-        symbol: "hearts",
+        symbol: "money-bag",
         payoutPerMatch: [0, 0, 0, 20, 50, 250]
     },
     {
-        symbol: "spades",
+        symbol: "hat",
         payoutPerMatch: [0, 0, 0, 20, 50, 250]
     },
     {
-        symbol: "clubs",
+        symbol: "pistols",
         payoutPerMatch: [0, 0, 0, 20, 50, 250]
     },
     {
@@ -195,7 +195,7 @@ export const PAYTABLE: PaytableItem[] = [
         payoutPerMatch: [0, 0, 2, 5, 15, 75]
     },
     {
-        symbol: "reward1000",
+        symbol: "wanted",
         payoutPerMatch: [0, 0, 0, 1, 3, 10, 50, 100, 1000]
     }
 ]

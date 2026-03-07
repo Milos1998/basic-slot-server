@@ -91,8 +91,8 @@ function getStadardWinLines(reelImage: Image, gameState: GameState): WinLine[] {
 }
 
 function isMatching(winLine: WinLine, symbol: Symbol): boolean {
-    //reward1000 is scatter
-    if (winLine.winSymbol === "reward1000" || symbol === "reward1000") return false;
+    //wanted is scatter
+    if (winLine.winSymbol === "wanted" || symbol === "wanted") return false;
     if (winLine.winSymbol === symbol) return true;
     //wild can't be substitute for sherif
     if (winLine.winSymbol === "sherif" || symbol === "sherif") return false;
@@ -102,17 +102,17 @@ function isMatching(winLine: WinLine, symbol: Symbol): boolean {
 
 function getScatterWinLine(reelImage: Image, gameState: GameState) {
     const winLine: WinLine = {
-        winSymbol: "reward1000",
+        winSymbol: "wanted",
         payout: 0,
         winCells: []
     };
     for (const reel of reelImage) {
         for (const cell of reel) {
-            if (cell.symbol === "reward1000") winLine.winCells.push(cell);
+            if (cell.symbol === "wanted") winLine.winCells.push(cell);
         }
     }
 
-    const payInfo = PAYTABLE.find((pay) => pay.symbol === "reward1000");
+    const payInfo = PAYTABLE.find((pay) => pay.symbol === "wanted");
     if (payInfo === undefined) throw new Error("Missing pay info");
     let multiplier;
     if (winLine.winCells.length >= payInfo.payoutPerMatch.length)
@@ -129,7 +129,7 @@ function calculatePayouts(winLines: WinLine[], gameState: GameState) {
         const payInfo = PAYTABLE.find((pay) => pay.symbol === winLine.winSymbol);
         if (payInfo === undefined) throw new Error("Missing pay info");
 
-        if (winLine.winSymbol !== "reward1000") {
+        if (winLine.winSymbol !== "wanted") {
             const multiplier = payInfo.payoutPerMatch[winLine.winCells.length];
             winLine.payout = multiplier * gameState.betPerLine;
         }
